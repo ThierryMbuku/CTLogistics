@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1ee68f6b5f4d44c28c8a8a22e0fa7f99" Name="Diagram1" ZoomLevel="77">
+        <EntityTypeShape EntityType="CTLogisticsModel.Client" Width="1.5" PointX="9.625" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CTLogisticsModel.Order" Width="1.5" PointX="1.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CTLogisticsModel.Product" Width="1.5" PointX="1.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CTLogisticsModel.UserRole" Width="1.5" PointX="8.125" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CTLogisticsModel.OrderHistory" Width="1.5" PointX="5.25" PointY="1.75" IsExpanded="true" />
+        <AssociationConnector Association="CTLogisticsModel.FK__Clients__UserRol__1273C1CD" ManuallyRouted="false" />
+        <AssociationConnector Association="CTLogisticsModel.FK__OrderHist__Order__1CF15040" ManuallyRouted="false" />
+        <AssociationConnector Association="CTLogisticsModel.FK__OrderHist__Produ__1BFD2C07" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
