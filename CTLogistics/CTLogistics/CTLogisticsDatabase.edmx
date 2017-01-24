@@ -47,6 +47,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="UnitPrice" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="UserRoles">
           <Key>
@@ -67,7 +68,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OrderHist__Order__44CA3770">
+        <Association Name="FK__OrderHist__Order__6CD828CA">
           <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
           <End Role="OrderHistory" Type="Self.OrderHistory" Multiplicity="*" />
           <ReferentialConstraint>
@@ -79,7 +80,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OrderHist__Produ__43D61337">
+        <Association Name="FK__OrderHist__Produ__6BE40491">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
           <End Role="OrderHistory" Type="Self.OrderHistory" Multiplicity="*" />
           <ReferentialConstraint>
@@ -101,11 +102,11 @@
             <End Role="UserRoles" EntitySet="UserRoles" />
             <End Role="Clients" EntitySet="Clients" />
           </AssociationSet>
-          <AssociationSet Name="FK__OrderHist__Order__44CA3770" Association="Self.FK__OrderHist__Order__44CA3770">
+          <AssociationSet Name="FK__OrderHist__Order__6CD828CA" Association="Self.FK__OrderHist__Order__6CD828CA">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="OrderHistory" EntitySet="OrderHistory" />
           </AssociationSet>
-          <AssociationSet Name="FK__OrderHist__Produ__43D61337" Association="Self.FK__OrderHist__Produ__43D61337">
+          <AssociationSet Name="FK__OrderHist__Produ__6BE40491" Association="Self.FK__OrderHist__Produ__6BE40491">
             <End Role="Products" EntitySet="Products" />
             <End Role="OrderHistory" EntitySet="OrderHistory" />
           </AssociationSet>
@@ -148,6 +149,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="OrderHistories" Relationship="Self.FK__OrderHist__Produ__1BFD2C07" FromRole="Products" ToRole="OrderHistory" />
+          <Property Name="UnitPrice" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="UserRole">
           <Key>
@@ -261,6 +263,7 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="CTLogisticsModel.Product">
               <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
               </MappingFragment>

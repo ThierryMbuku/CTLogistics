@@ -21,6 +21,7 @@ namespace CTLogistics
     
         public int Id { get; set; }
         public string Description { get; set; }
+        public Nullable<decimal> UnitPrice { get; set; }
     
         public virtual ICollection<OrderHistory> OrderHistories { get; set; }
     }

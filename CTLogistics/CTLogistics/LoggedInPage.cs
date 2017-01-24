@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Data.Entity.Validation;
 using System.Globalization;
 using System.Linq;
@@ -88,7 +89,6 @@ namespace CTLogistics
                     query.CellPhone = Convert.ToInt32(tbCellPhone.Text);
                     query.Password = tbPassword.Text;
                     query.Comments = tbCommentPersoInfo.Text;
-
                     try
                     {
                         db.SaveChanges();
@@ -121,35 +121,49 @@ namespace CTLogistics
                 {
                     int totalrows = dgInvoice.Rows.Count;
                     string total = label20.Text.Replace("R", "");
+                   
 
                     var item = new OrderHistory();
                     var order = new Order
                     {
-                        OrderNumber = 1234567,
-                        InvoiceNumber = 099909,
+                        OrderNumber = 1000, //make unique
+                        InvoiceNumber = 1000, //make unique
                         Total = Convert.ToDecimal(total)
                     };
+                    // Don't need to check if exist. according to business rules
+                    var existingOrder = db.OrderHistories.FirstOrDefault(x => x.UnitPrice == item.UnitPrice && x.Quantity == item.Quantity);
 
-                    db.Orders.Add(order);
-                    db.SaveChanges();
-
-                    foreach (DataGridViewRow row in dgInvoice.Rows)
+                    if (existingOrder != null)
                     {
-                        if (Convert.ToBoolean(row.Cells[5].Value) == true)
-                        {
-                            item.ProductId = Convert.ToInt32(row.Cells[0].Value);
-                            item.OrderId = order.Id;
-                            item.Quantity = Convert.ToInt32(row.Cells[2].Value);
-                            item.UnitPrice = Convert.ToDecimal(row.Cells[3].Value);
-                            item.Id = existinguser.Id;
-                            item.Amount = Convert.ToDecimal(row.Cells[4].Value);
-                            db.OrderHistories.Add(item);
-                        }
+                        item = existingOrder;
                     }
+                    else
+                    {
+                        var lastRowInvoice = db.Orders.ToList().Last().InvoiceNumber;
+                        var lastRowOrder = db.Orders.ToList().Last().OrderNumber;
 
-                    db.SaveChanges();
-                    MessageBox.Show("Order submitted!");
+                        order.OrderNumber = lastRowInvoice + 1;
+                        order.InvoiceNumber = lastRowOrder + 1;
 
+                        db.Orders.Add(order);
+                        db.SaveChanges();
+
+                        foreach (DataGridViewRow row in dgInvoice.Rows)
+                        {
+                            if (Convert.ToBoolean(row.Cells[5].Value) == true)
+                            {
+                                item.ProductId = Convert.ToInt32(row.Cells[0].Value);
+                                item.OrderId = order.Id;
+                                item.Quantity = Convert.ToInt32(row.Cells[2].Value);
+                                item.UnitPrice = Convert.ToDecimal(row.Cells[3].Value);
+                                item.Id = existinguser.Id;
+                                item.Amount = Convert.ToDecimal(row.Cells[4].Value);
+                                db.OrderHistories.Add(item);
+                            }
+                        }
+                        db.SaveChanges();
+                        MessageBox.Show("Order submitted!");
+                    }
                 }
                 catch (DbEntityValidationException ex)
                 {
@@ -162,7 +176,6 @@ namespace CTLogistics
             var cellValue = dgInvoice.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
             quantity = (cellValue == null || cellValue == "") ? 0 : Convert.ToInt32(cellValue);
         }
-
         private void dgInvoice_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             decimal total = 0;
@@ -178,7 +191,6 @@ namespace CTLogistics
             foreach (DataGridViewRow rows in dgInvoice.Rows)
             {
                 tot = 0;
-
                 bool checkbox = Convert.ToBoolean(rows.Cells[e.ColumnIndex].EditedFormattedValue);
                 if (checkbox == true)
                 {
@@ -246,7 +258,6 @@ namespace CTLogistics
                 }
             }
         }
-
         private void dgInvoice_CellEndEdit_1(object sender, DataGridViewCellEventArgs e)
         {
             decimal amt = 0;
@@ -278,7 +289,6 @@ namespace CTLogistics
                 }
             }
         }
-
         private void fillByToolStripButton_Click(object sender, EventArgs e)
         {
             try
@@ -291,7 +301,6 @@ namespace CTLogistics
             }
 
         }
-
         private void fillToolStripButton_Click(object sender, EventArgs e)
         {
             try
