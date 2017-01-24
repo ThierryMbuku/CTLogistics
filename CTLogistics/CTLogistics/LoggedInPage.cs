@@ -121,7 +121,7 @@ namespace CTLogistics
                 {
                     int totalrows = dgInvoice.Rows.Count;
                     string total = label20.Text.Replace("R", "");
-                   
+
 
                     var item = new OrderHistory();
                     var order = new Order
@@ -168,6 +168,7 @@ namespace CTLogistics
                 catch (DbEntityValidationException ex)
                 {
                     Console.WriteLine(ex.ToString());
+
                 }
             }
         }
